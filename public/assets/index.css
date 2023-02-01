@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+    --main-color: #171742;
+    --color-dark: #E5E1E6;
+    --text-grey: black;
+}
+
+* {
+    font-family: 'Poppins', sans-serif
+;    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style-type: none;
+    box-sizing: border-box;
+}
+#description{
+    width: 400px;
+}
+
+
+.main-contentx{
+    margin-left: 230px;
+}
+
+
+#sidebar-toggle {
+    display: none;
+}
+
+
+.sidebar {
+    height: 100%;
+    width: 240px;
+    position: fixed;
+    left: 2;
+    top: 0;
+    z-index: 100;
+    background: var(--main-color);
+    color: #fff;
+    overflow-y: auto;
+    transition: width 1000ms;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0rem 1rem;
+}
+
+.sidebar-menu {
+    padding: 1rem;
+}
+
+.sidebar li {
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid white;
+}
+
+.sidebar a {
+    color: #fff;
+    font-size: .8rem;
+   
+}
+
+.sidebar a span:last-child {
+    padding-left: .6rem;
+    font-size: 18px;
+}
+
+#sidebar-toggle:checked ~ .sidebar {
+    width: 60px;
+}
+
+#sidebar-toggle:checked ~ .sidebar .sidebar-header h3 span,
+#sidebar-toggle:checked ~ .sidebar li span:last-child {
+    display: none;
+}
+
+#sidebar-toggle:checked ~ .sidebar .sidebar-header,
+#sidebar-toggle:checked ~ .sidebar li {
+    display: flex;
+    justify-content: center;
+}
+
+#sidebar-toggle:checked ~ .main-content {
+    margin-left: 60px;
+    transition: width 1000ms;
+}
+
+#sidebar-toggle:checked ~ .main-content header {
+    left: 60px;
+    width: calc(100% - 60px);
+}
+
+#sidebar-toggle:checked ~ .main-contents {
+    margin-left: 0px;
+}
+
+#sidebar-toggle:checked ~ .main-contents header {
+    left: 60px;
+    width: calc(100% - 60px);
+}
+
+.main-contents {
+
+    margin-left: 180px;
+
+}
+
+.main-content {
+
+    margin-left: 250px;
+
+}
+
+
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.search-wrapper input {
+    border: 0;
+    outline: 0;
+    padding: 1rem;
+    height: 38px;
+}
+
+.social-icons {
+    display: flex;
+    align-items: center;
+}
+
+.social-icons span,
+.social-icons div {
+    margin-left: 1.2rem;
+}
+
+.social-icons div {
+    height: 38px;
+    width: 38px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(img/1.jpg);
+    border-radius: 50%;
+}
+
+main {
+
+    background: #f1f5f9;
+    width: auto;
+
+}
+.swiper {
+  width: 750px;
+  height: 710px;
+}
+
+.dash-title {
+
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #171742;
+}
+
+.dash-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 3rem;
+  
+}
+
+.card-single {
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+    margin-top: 20px;
+    width: auto;
+}
+
+.row{
+    width: 100%;
+    margin-left: 20px;
+}
+
+.card-body {
+    padding: 1.3rem 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.card-body span {
+    font-size: 1.5rem;
+    color: #777;
+    padding-right: 1.4rem;
+}
+
+.card-body h5 {
+    color: var(--text-grey);
+    font-size: 1rem;
+}
+
+.card-body h4 {
+    color: black;
+    font-size: 1.1rem;
+    margin-top: .2rem;
+    text-align: justify;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+table img{
+    width: 200px;
+    height: 100px;
+}
+
+table td{
+    color: black;
+}
+
+
+th, td {
+    font-size: .9rem;
+    text-align: center;
+    color: var(--color-dark);
+}
+
+
+#center{
+    text-align: center;
+}
+
+
+.text-center button {
+    color: #fff;
+    border: 1px solid var(--main-color);
+    border-radius: 4px;
+    text-align: center;
+}
+table{
+    margin-top:20px; text-align:center;
+}
+
+
+
+#loginbg {
+    width: 100%;
+    height: 100vh;
+    background: url("../img/forlogin.jpg") top center no-repeat;
+    background-size: cover;
+    position: relative;
+    padding: 0;
+}
+
+#loginbg:before {
+  content: "";
+  background: rgba(23, 23, 66, 0.877);
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+
+/* Projects Blade */
+
+#addcampaign {
+    display: flex;
+    justify-content: center;
+}
+
+
+/* Project1 Blade */
+
+
+  
+  /* Burger */
+
+
+    /*login */
+
+    body {
+        font-family: "Roboto", sans-serif;
+        background-color: #fff; }
+      
+ 
+
+      .half, .half .container > .row {
+        height: 100vh;
+        min-height: 700px; }
+      
+      
+          
+  
+      .half .btn {
+        height: 54px;
+        padding-left: 30px;
+        padding-right: 30px; }
+      
+         .form-block {
+        background: #171742;
+        border-radius: 20px;
+        padding: 40px;
+        }
+        @media (max-width: 991.98px) {
+          .form-block {
+            padding: 25px; } }
+      
+     
+
+    
+    /* additional css */
+
+    .DATA{
+        color: #171742;
+
+    }
+
+    .cover{
+        width: 70%
+    }
+
+
+    #profilelabel {
+      color: #fff;
+    }
+
+    #changepassbtn{
+      background-color: #634AF2;
+    }
+
+    #logintext {
+      color: #E5E1E6;
+    }
+
+    .loginbtn {
+      background-color: #634AF2;
+      color: #E5E1E6;
+    }
