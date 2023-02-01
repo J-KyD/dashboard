@@ -130,7 +130,7 @@ Route::post('/login', [campaigncontroller::class , 'userLogin']);
 //Logout
 Route::get('/campaignall', [campaigncontroller::class , 'campaignAll']);
 
-Route::get('/adminLogout', [campaigncontroller::class , 'getLogout'])->name('adminlogout');
+Route::get('/adminLogout', [campaigncontroller::class , 'export'])->name('adminlogout');
 
 
 

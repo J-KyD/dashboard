@@ -20,7 +20,7 @@ class UsersExport implements FromCollection
 {
     public function collection()
     {
-        return DB::table('users')->get();
+        return User::where('type','user')->get();
     }
 }
 
