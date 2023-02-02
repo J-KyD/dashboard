@@ -246,7 +246,7 @@ $roles = Roles::where('id', $employee->role_id)->get();
   </div>
 </div>
 <!-- Jumbotron -->
-</section>
+
 </div>
   </div>
 </div>

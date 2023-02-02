@@ -36,15 +36,16 @@
                           <span>COCA</span>
                       </a>
                   </li>
+                  <li>
+                    <a href="overtime">
+                        
+                        <i class="ti-clipboard"></i>
+                        <span>Overtime</span>
+                    </a>
+                </li>
                 @if(Auth::check())
                               @if( session('type') == "admin" )
-                              <li>
-                                <a href="overtime">
-                                    
-                                    <i class="ti-clipboard"></i>
-                                    <span>Overtime</span>
-                                </a>
-                            </li>
+                              
                             <li>
                                 <a href="announce">
                                     

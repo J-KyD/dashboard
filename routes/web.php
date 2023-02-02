@@ -71,12 +71,11 @@ Route::get('/projects',[campaigncontroller::class , 'allProjects']);
 
 
 
-Route::get('/birthdays',[campaigncontroller::class , 'birthdays']);
-Route::get('/users',[campaigncontroller::class , 'users']);
 
-Route::get('/overtime', function () {
-    return view('overtime');
-});
+Route::get('/overtime',[campaigncontroller::class , 'overtime']);
+
+Route::post('/addOvertime',[campaigncontroller::class , 'addOvertime']);
+
 
 Route::get('/month', function () {
     return view('month');
@@ -132,6 +131,7 @@ Route::get('/campaignall', [campaigncontroller::class , 'campaignAll']);
 
 Route::get('/adminLogout', [campaigncontroller::class , 'getLogOut'])->name('adminlogout');
 
+Route::post('/generate ', [campaigncontroller::class , 'generatePDF']);
 
 
 

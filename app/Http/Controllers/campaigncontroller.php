@@ -15,6 +15,7 @@ use Dompdf\Dompdf;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Support\Facades\DB;
+use App\Models\Overtime;
 
 class UsersExport implements FromCollection
 {
@@ -75,6 +76,31 @@ class campaigncontroller extends Controller
     
         return view('useraccounts',['data'=>$client]);
        
+    }
+    
+    function overtime(Request $request){
+        
+         $project = allProjects::where('team_leader',session('name'))->get();
+         if($project){
+         $overtime=Overtime::where('name_of_campaign',$request->campaign)->get();
+     
+        $all = ['overtime' => $overtime, 'project' => $project];
+        return view('overtime',['data'=>$all]);
+       
+    }
+    else{
+        return view('overtime',['data'=>$project]);
+    }
+  
+    }
+    
+ 
+
+    function addOvertime(Request $request){
+        Overtime::create($request->name,$request->employee,$request->hours,$request->amount,$request->address,$request->activity);
+
+        return back()->with('status', 'Successfully added');
+         
     }
 
   
@@ -455,9 +481,10 @@ function getLogOut(Request $request){
     return redirect('/')->with(['loginstatus' => 'Logged Out']);
 }
 
- function generatePDF()
+ function generatePDF(Request $request)
 {
-    $data = User::where('type','admin')->get();
+    $data=User::find($request->generateID);
+    
 
     if (!$data) {
         return 'No data found';
@@ -481,14 +508,14 @@ public function getHTML($data)
             </thead>
             <tbody>';
 
-    foreach ($data as $row) {
+   
         $output .= '
             <tr>
-                <td style ="border: 2px solid black;">'.$row->name.'</td>
-                <td style ="border: 2px solid black;">'.$row->employee_number.'</td>
-                <td style ="border: 2px solid black;">'.$row->type.'</td>
+                <td style ="border: 2px solid black;">'.$data->name.'</td>
+                <td style ="border: 2px solid black;">'.$data->employee_number.'</td>
+                <td style ="border: 2px solid black;">'.$data->type.'</td>
             </tr>';
-    }
+   
 
     $output .= '
             </tbody>
