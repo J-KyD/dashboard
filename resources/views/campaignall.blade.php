@@ -18,11 +18,13 @@ use App\Models\Campaign;
 @php
 
 $products = allProjects::find($datas->project_id);
+$spaced_word = implode(" ",  str_split ($products->project_name));
 
 @endphp
 @endforeach
+<H1> {{$spaced_word }} </H1>
 
-<h1>{{$products->project_name}}</h1>
+
 
               <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 70px">
                 <li class="nav-item" role="presentation">
@@ -48,16 +50,22 @@ $products = allProjects::find($datas->project_id);
                           <th id="center">Employee No.</th>
                           <th id="center">Hire Date</th>
                           <th id="center">Contact Number</th>
+
+                          @if( session('type') == "admin" )
                           <th id="center">Birthdate</th>
+                          @endif
+
                           <th id="center">Project Name</th>
                           <th id="center">Designation</th>
                           <th id="center">Tenure</th>
                           <th id="center">Total IT Exp</th>
                           <th id="center">Status</th>
+
  @if(Auth::check())
  @if( session('type') == "admin" )
                           <th>Action</th>
  @endif 
+
                           </tr>
                           </thead>
                           <tbody>
@@ -76,8 +84,10 @@ $products = allProjects::find($datas->project_id);
                               <td class="DATA">{{ $employee->hire_date }}</td>
 
                               <td class="DATA">{{ $employee->contact }}</td>
-
+                              
+                              @if( session('type') == "admin" )
                               <td class="DATA">{{ $employee->birthdate }}</td>
+                              @endif
 
 @php
 $products = allProjects::where('id', $datas->project_id)->get();

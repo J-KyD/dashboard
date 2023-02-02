@@ -11,7 +11,7 @@ use App\Models\Campaign;
 
         
     <main>
-        <h1 class="dash-title" style="color: #171742">Projects</h1>
+        <h1 class="dash-title" style="color: #171742">P R O J E C T S</h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Project</button>
