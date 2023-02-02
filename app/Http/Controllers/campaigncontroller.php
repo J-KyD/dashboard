@@ -9,8 +9,9 @@ use App\Models\User;
 use Hash, Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
+// use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Welcome;
+<<<<<<< Updated upstream
 use Dompdf\Dompdf;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -23,6 +24,20 @@ class UsersExport implements FromCollection
         return DB::table('users')->get();
     }
 }
+=======
+// use Dompdf\Dompdf;
+// use Maatwebsite\Excel\Concerns\FromArray;
+// use Maatwebsite\Excel\Concerns\FromCollection;
+// use Illuminate\Support\Facades\DB;
+
+// class UsersExport implements FromCollection
+// {
+//     public function collection()
+//     {
+//         return User::where('type','user')->get();
+//     }
+// }
+>>>>>>> Stashed changes
 
 class campaigncontroller extends Controller
 {
@@ -455,54 +470,54 @@ function getLogOut(Request $request){
     return redirect('/')->with(['loginstatus' => 'Logged Out']);
 }
 
- function generatePDF()
-{
-    $data = User::where('type','admin')->get();
+//  function generatePDF()
+// {
+//     $data = User::where('type','admin')->get();
 
-    if (!$data) {
-        return 'No data found';
-    }
-    $pdf = new Dompdf();
+//     if (!$data) {
+//         return 'No data found';
+//     }
+//     $pdf = new Dompdf();
  
-    $pdf->loadHTML($this->getHTML($data));
-    $pdf->render();
-    $pdf->stream();
-}
-public function getHTML($data)
-{
-    $output = '
-        <table >
-            <thead>
-                <tr >
-                    <th style ="border: 2px solid black;">Column 1</th>
-                    <th style ="border: 2px solid black;">Column 2</th>
-                    <th style ="border: 2px solid black;">Column 3</th>
-                </tr>
-            </thead>
-            <tbody>';
+//     $pdf->loadHTML($this->getHTML($data));
+//     $pdf->render();
+//     $pdf->stream();
+// }
+// public function getHTML($data)
+// {
+//     $output = '
+//         <table >
+//             <thead>
+//                 <tr >
+//                     <th style ="border: 2px solid black;">Column 1</th>
+//                     <th style ="border: 2px solid black;">Column 2</th>
+//                     <th style ="border: 2px solid black;">Column 3</th>
+//                 </tr>
+//             </thead>
+//             <tbody>';
 
-    foreach ($data as $row) {
-        $output .= '
-            <tr>
-                <td style ="border: 2px solid black;">'.$row->name.'</td>
-                <td style ="border: 2px solid black;">'.$row->employee_number.'</td>
-                <td style ="border: 2px solid black;">'.$row->type.'</td>
-            </tr>';
-    }
+//     foreach ($data as $row) {
+//         $output .= '
+//             <tr>
+//                 <td style ="border: 2px solid black;">'.$row->name.'</td>
+//                 <td style ="border: 2px solid black;">'.$row->employee_number.'</td>
+//                 <td style ="border: 2px solid black;">'.$row->type.'</td>
+//             </tr>';
+//     }
 
-    $output .= '
-            </tbody>
-        </table>';
+//     $output .= '
+//             </tbody>
+//         </table>';
 
-    return $output;
-}
+//     return $output;
+// }
 
 
-public function export() 
-{
+// public function export() 
+// {
 
-    return Excel::download(new UsersExport, 'users.xlsx');
-}
+//     return Excel::download(new UsersExport, 'users.xlsx');
+// }
 
 
 }
