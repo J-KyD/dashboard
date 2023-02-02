@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Welcome;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Support\Facades\DB;
@@ -487,27 +488,35 @@ function getLogOut(Request $request){
 
  function generatePDF(Request $request)
 {
-    $data=User::find($request->generateID);
+    $data=User::find(session('ids'));
     
 
     if (!$data) {
         return 'No data found';
     }
-    $pdf = new Dompdf();
- 
+    $options = new Options();
+    $options->set('chroot', realpath(''));
+    $pdf = new Dompdf($options);
     $pdf->loadHTML($this->getHTML($data));
     $pdf->render();
     $pdf->stream();
+    $pdf->setPaper('A4', 'portrait');
 }
 public function getHTML($data)
 {
+        
     $output = '
+    <style>
+    td,
+    th{
+    border: 2px solid black;}
+    </style>
         <table >
             <thead>
                 <tr >
-                    <th style ="border: 2px solid black;">Column 1</th>
-                    <th style ="border: 2px solid black;">Column 2</th>
-                    <th style ="border: 2px solid black;">Column 3</th>
+                    <th >Column 1</th>
+                    <th >Column 2</th>
+                    <th >Column 3</th>
                 </tr>
             </thead>
             <tbody>';
@@ -515,10 +524,13 @@ public function getHTML($data)
    
         $output .= '
             <tr>
-                <td style ="border: 2px solid black;">'.$data->name.'</td>
-                <td style ="border: 2px solid black;">'.$data->employee_number.'</td>
-                <td style ="border: 2px solid black;">'.$data->type.'</td>
+                <td >'.$data->name.'</td>
+                <td >'.$data->employee_number.'</td>
+                <td >'.$data->type.'</td>
+                <img src="img/absicover.jpg" alt="logo" align="middle" style="height:100px; margin-left: auto; margin-right: auto">  </body>
+       
             </tr>';
+         
    
 
     $output .= '
