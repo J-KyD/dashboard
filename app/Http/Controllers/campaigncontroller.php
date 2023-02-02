@@ -447,6 +447,10 @@ return back()->with("update successfully");
           
             return redirect('/landing');
           }
+          elseif($user->type =="leader"){
+          
+            return redirect('/landing');
+          }
       }
     
       elseif($request->employee_number == "" || $request->password ==""){
