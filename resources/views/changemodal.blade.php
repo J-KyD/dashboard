@@ -13,22 +13,20 @@
               
          
                   <div class="form-outline form-white mb4">
+                    <input name="old" type="text" class="form-control" id="oldPasswordInput"placeholder="Old Password">
                     <label for="newPasswordInput" class="form-label">Old Password</label>
-                    <input name="old" type="text" class="form-control" id="oldPasswordInput"
-                        placeholder="Old Password">
 
                 </div>
                     <div class="form-outline form-white mb4">
-                      <label for="newPasswordInput" class="form-label">New Password</label>
                       <input name="new" type="text" class="form-control" id="newPasswordInput"
                           placeholder="New Password">
+                          <label for="newPasswordInput" class="form-label">New Password</label>
 
                   </div>
                   <div class="mb-3">
-                    
-                      <label for="confirmNewPasswordInput" class="form-label">Confirm New Password</label>
                       <input name="confirm" type="text" class="form-control" id="confirmNewPasswordInput"
                           placeholder="Confirm New Password">
+                          <label for="confirmNewPasswordInput" class="form-label">Confirm New Password</label>
 
                           <input type="text" name="uid" value="{{ session('ids') }}" hidden>
                   </div>

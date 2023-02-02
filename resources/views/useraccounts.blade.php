@@ -104,25 +104,31 @@
                   <!-- Name Input-->
                   <div class="row">
                     <div class="col-md-12 mb-4" >
-                    <div class="form-outline mb-6">
-                      <input type="text" name='name'id="form3Example1" class="form-control" style="width: 450px;margin-left: 35%;" />
-                      <label style="margin-left: 35px;" class="form-label" for="form3Example1">Full Name</label>
+                      
+                      <div class="form-group first mb-6">
+                        <input type="text" id="typeEmailX"
+                        name='name'class="form-control form-control-lg "style="width: 450px;margin-left: 35%;" />
+                        <label  style=" display: inline-block;
+                        width: 278px;
+                        text-align: left;"class="form-label" for="typeEmailX" id="form3Example1">Full Name</label>
                     </div>
                     </div>
                     <div class="col-md-12 mb-4" >
-                    <div class="form-outline">
-                      <input type="text" name='employee_number' id="form3Example3" class="form-control" style="width: 450px;margin-left: 35%;" />
-                      <label style="margin-left: 35px;" class="form-label" for="form3Example2">Employee Number</label>
+                      <div class="form-group first mb-6">
+                        <input type="text" id="typeEmailX"
+                        name='employee_number'class="form-control form-control-lg "style="width: 450px;margin-left: 35%;" />
+                        <label  style=" display: inline-block;
+                        width: 278px;
+                        text-align: left;"class="form-label" for="typeEmailX" id="form3Example1">Employee</label>
                     </div>
                     </div>
-             
-            
-                  <!-- Password -->
-                  <div class="col-md-12 mb-4" >
-                    <div class="form-outline">
-                    <input type="password" name='password' id="form3Example5" class="form-control" style="width: 450px;margin-left: 35%;" />
-                     <label style="margin-left: 35px;" class="form-label" for="form3Example4">Password</label>
-                    <input type="text" name='type' id="form3Example3" class="form-control"  value="user" hidden/>
+                    <div class="col-md-12 mb-6" >
+                    <div class="form-group first mb-6">
+                      <input type="password" id="typeEmailX"
+                      name='password'class="form-control form-control-lg "style="width: 450px;margin-left: 35%;" />
+                      <label  style=" display: inline-block; width: 278px; text-align: left;"class="form-label" 
+                      for="typeEmailX" id="form3Example1">Password</label>
+                      <input type="text" name='type' id="form3Example3" class="form-control"  value="user" hidden/>
                    
                   </div>
                   </div>

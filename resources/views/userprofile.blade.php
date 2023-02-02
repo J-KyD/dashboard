@@ -7,7 +7,7 @@
 
         
     <main>
-        <h1 class="dash-title">User Profile</h1>
+        <h1 class="dash-title">U S E R  P R O F I L E</h1>
            
                 <style>
                     .cascading-right {
