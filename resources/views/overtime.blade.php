@@ -11,7 +11,7 @@
 
 <div class="main-content">     
     <main>
-        <h1 class="dash-title">OVERTIME</h1>
+        <h1 class="dash-title">O V E R T I M E</h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Display</button>
@@ -55,16 +55,23 @@
                 <div class="col-1" style="margin-left:20px;margin-bottom:20px;">
                 <form method="post" action ="generate">
                   @csrf
-                
+            
+          
+                  @if($data['over']!=null)
+                  <input type="text" value="{{ $data['over']->name_of_campaign }}" name="campaign" hidden>
+           @endif
+
                       <button class="btn btn-danger" type="submit" style="margin-top:20px;white-space: nowrap;font-size: 1rem;color:white;text-align:center;padding: 0.375rem 0.75rem"><i class="fa fa-file-pdf-o">
-                      </i> Export PDF</button>
+                      </i> Export PDF </button>
                 </form>
                 
                 </div>
                 <div class="col-1" style="margin-left:10px;margin-bottom:20px;">
-                  <form method="post" action ="generate">
+                  <form method="post" action ="export">
                     @csrf
-                  
+                    @if($data['over']!=null)
+                    <input type="text" value="{{ $data['over']->name_of_campaign }}" name="campaign" hidden>
+             @endif
                         <button class="btn btn-success" type="submit" style="margin-top:20px;white-space: nowrap;font-size: 1rem;color:white;text-align:center;padding: 0.375rem 0.75rem"><i class="fa fa-file-excel-o">
                         </i> Export Excel</button>
                   </form>

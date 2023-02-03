@@ -75,6 +75,7 @@ Route::get('/projects',[campaigncontroller::class , 'allProjects']);
 Route::get('/overtime',[campaigncontroller::class , 'overtime']);
 
 Route::post('/addOvertime',[campaigncontroller::class , 'addOvertime']);
+Route::post('/export',[campaigncontroller::class , 'export']);
 
 
 Route::get('/month', function () {
@@ -131,7 +132,7 @@ Route::get('/campaignall', [campaigncontroller::class , 'campaignAll']);
 
 Route::get('/adminLogout', [campaigncontroller::class , 'getLogOut'])->name('adminlogout');
 
-Route::post('/generate ', [campaigncontroller::class , 'generatePDF']);
+Route::post('/generate ', [campaigncontroller::class , 'generateglobe']);
 
 
 

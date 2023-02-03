@@ -51,7 +51,7 @@ $spaced_word = implode(" ",  str_split ($products->project_name));
                           <th id="center">Hire Date</th>
                           <th id="center">Contact Number</th>
 
-                          @if( session('type') == "admin" )
+                          @if( session('type') == "admin" || session('type') == "leader")
                           <th id="center">Birthdate</th>
                           @endif
 

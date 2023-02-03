@@ -64,7 +64,7 @@
                                 </div>
                         </div>
                         <!-- Password input -->
-                        <a href="#changePass" class="btn btn-success" id="changepassbtn" data-bs-toggle="modal"><i class="fa-solid fa-trash"></i>
+                        <a href="#changePass" class="btn btn-primary" id="changepassbtn" data-bs-toggle="modal"><i class="fa-solid fa-trash"></i>
                           Change Password</a>
                           
                           @if(session('status'))

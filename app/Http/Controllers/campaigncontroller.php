@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Exports\OvertimeExport;
 use App\Models\Campaign;
 use App\Models\allProjects;
 use App\Models\Employee;
@@ -13,18 +14,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Welcome;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Maatwebsite\Excel\Concerns\FromArray;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Illuminate\Support\Facades\DB;
 use App\Models\Overtime;
 
-class UsersExport implements FromCollection
-{
-    public function collection()
-    {
-        return User::where('type','user')->get();
-    }
-}
+
 
 class campaigncontroller extends Controller
 {
@@ -83,9 +75,10 @@ class campaigncontroller extends Controller
         
          $project = allProjects::where('team_leader',session('name'))->get();
          if($project){
+            $over = Overtime::where('name_of_campaign', $request->campaign)->get()->first();
          $overtime=Overtime::where('name_of_campaign',$request->campaign)->get();
      
-        $all = ['overtime' => $overtime, 'project' => $project];
+        $all = ['overtime' => $overtime, 'project' => $project,'over'=>$over];
         return view('overtime',['data'=>$all]);
        
     }
@@ -540,13 +533,404 @@ public function getHTML($data)
     return $output;
 }
 
+//COCA template v3
 
-public function export() 
+function generateCOCAtempV3()
 {
+    $data = User::where('type','admin')->get();
 
-    return Excel::download(new UsersExport, 'users.xlsx');
+    if (!$data) {
+        return 'No data found';
+    }
+    $options = new Options();
+    $options->set('chroot', realpath(''));
+
+    $pdf = new Dompdf($options);
+
+    $pdf->loadHTML($this->getPDF($data));
+    $pdf->render();
+    $pdf->stream();
+    $pdf->setPaper('A4', 'portrait');
 }
 
+public function getPDF($data)
+{
+    $output = '
+    <div style="text-align:center; font-family:Arial, Helvetica, sans-serif; margin-top: 1.31cm">
+        <b style="font-size: 15pt;">CERTIFICATE OF COMPLETION and ACCOMPLISHMENT</b>
+        <p></p>
+    </div>
+    
+    <div style="font-family:Arial, Helvetica, sans-serif; display:flex; justify-content:center; flex-direction:column; margin: 0 1cm 0.49cm 1.4cm">
+
+    <table style="font-size: 10pt; font-weight:bold; border-bottom: 1px solid black;">
+        <tr>
+            <td style="width:150px;">DATE</td>
+            <td>:</td>
+            <td>JANUARY 2023</td>
+        </tr>
+        <tr>
+            <td>SERVICES/ PROJECT</td>
+            <td>:</td>
+            <td>ITG UnionBank Project Alpha</td>
+        </tr>
+        <tr>
+            <td>LOCATION</td>
+            <td>:</td>
+            <td>Renaissance Tower 29 Meralco Avenue, The Renaissance Center, Pasig</td>
+        </tr>
+        <tr>
+            <td>OWNER</td>
+            <td>:</td>
+            <td>UNIONBANK</td>
+        </tr>
+    </table>
+
+    <table style="font-size: 10pt; font-weight:bold; border-bottom: 1px solid black; margin-bottom:25px;">
+        <tr>
+            <td style="width:150px;">P.O. #</td>
+            <td>:</td>
+            <td>P.O. # HERE</td>
+        </tr>
+
+        <tr>
+            <td>VENDOR</td>
+            <td>:</td>
+            <td>Asti Business Services Inc.</td>
+        </tr>
+        <tr>
+            <td>ADDRESS</td>
+            <td>:</td>
+            <td>234 Bayantel Building Roosevelt Avenue Quezon City </td>
+        </tr>
+        <tr>
+            <td>COMPLETION DATE</td>
+            <td>:</td>
+            <td>JANUARY 25,2023</td>
+        </tr>
+    </table>
+
+    <div style="margin-bottom:20px;">
+        <ol style="margin-bottom:0cm;list-style-type: upper-roman;margin-left:44px;">
+            <li><b>SCOPE OF WORK</b></li>
+        </ol>
+    </div>
+    <p><b>ACCOMPLISHMENTS</b></p>
+    <p style="text-indent:50px;">Please see the attach file for the Scope of work &ndash; Accomplishment Prior to Project
+        Engagement</p>
+    <p>The Vendor<b>, Asti Business Services Inc.&nbsp;</b> has delivered the above services in accordance with the
+        agreed scope of works and other related Contract Documents.</p>
+    <p>&lt;SCOPES AND STATUS&gt;</p>
+
+
+    <table style="border: 1px solid black; border-collapse:collapse; margin-bottom: 50px; width:100%;">
+        <thead>
+            <tr style="border: 1px solid black;">
+                <th style="border:solid windowtext 1.0pt; width:20%; background:#3C85C5; color: white;">Task</th>
+                <th style="border:solid windowtext 1.0pt; width:60%; background:#3C85C5; color: white;">
+                    Activity/Accomplishments</th>
+                <th style="border:solid windowtext 1.0pt; width:20%; background:#3C85C5; color: white;">Status</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+    foreach ($data as $row) {
+        $output .= '
+            <tr>
+                <td style ="border: 2px solid black;">'.$row->name.'</td>
+                <td style ="border: 2px solid black;">'.$row->employee_number.'</td>
+                <td style ="border: 2px solid black;">'.$row->type.'</td>
+            </tr>';
+    }
+
+    $output .= '
+            </tbody>
+        </table>
+        
+        <img src="img/client-11.jpg" alt="description of myimage" style="height:auto; width:5.68cm; margin-bottom:10px;">
+        <br>
+        <span style="font-size:8pt; margin-bottom: 50px;">The Globe Tower, 32nd St. cor. 7th Ave., Bonifacio Global City, Taguig City, Philippines</span>    
+
+
+        <div style="margin-bottom:50px;">
+        <ol style="margin-bottom:0cm;list-style-type: upper-roman;margin-left:44px;">
+            <li><b>CERTIFICATION</b></li>
+            <p>The Vendor certified that the Scope of Work involving delivery <b>&lt;CAMPAIGN NAME&gt;</b> has been
+                delivered and made available and operational as required and provided for in the scope of works/Contract
+                Documents.</p>
+            <p> The Vendor likewise agrees to correct any defect associated with the delivery of the service within the
+                contract period due to negligence or fault on the Vendor`s part.
+                <div
+                style="display:font-weight: bold;">
+                    <div style="margin: 100px 0 50px 150px">
+                        <div style="border-bottom: 1px solid black; width:200px; text-align:center;">RANEL OPLEDA</div>
+                        <div>Service Delivery Manager</div>
+                    </div>
+                </div>
+            <li><b>RECOMMENDATION</b></li>
+            <p>Cognizant of the accomplishment by Vendor of the scope of work, we hereby confirm and recommend for the
+                payment of this contract.</p>
+
+            <table style="width:100%;border-collapse:collapse; margin-bottom: 50px">
+                <tbody>
+                    <tr>
+                        <td style="width:25%;border: 1pt solid black;background: rgb(243, 243, 243);">
+                            <p style="text-align:center;"><b>Sequence</b></p>
+                        </td>
+                        <td
+                            style="width:25%;border-top: 1pt solid black;border-right: 1pt solid black;border-bottom: 1pt solid black;border-image: initial;border-left: none;background: rgb(243, 243, 243);padding: 5pt;vertical-align: top;">
+                            <p style="text-align:center;"><b>Name</b></p>
+                        </td>
+                        <td
+                            style="width:25%;border-top: 1pt solid black;border-right: 1pt solid black;border-bottom: 1pt solid black;border-image: initial;border-left: none;background: rgb(243, 243, 243);padding: 5pt;vertical-align: top;">
+                            <p style="text-align:center;"><b>Role</b></p>
+                        </td>
+                        <td
+                            style="width:25%;border-top: 1pt solid black;border-right: 1pt solid black;border-bottom: 1pt solid black;border-image: initial;border-left: none;background: rgb(243, 243, 243);padding: 5pt;vertical-align: top;">
+                            <p style="text-align:center;"><b>Signature</b></p>
+                        </td>
+                    </tr>';
+
+    foreach ($data as $row) {
+        $output .= '
+            <tr>
+                <td style ="border: 2px solid black;">'.$row->name.'</td>
+                <td style ="border: 2px solid black;">'.$row->employee_number.'</td>
+                <td style ="border: 2px solid black;">'.$row->type.'</td>
+                <td style ="border: 2px solid black;">'.$row->type.'</td>
+            </tr>';
+    }
+
+    $output .= '                
+            </tbody>
+        </table>
+
+            <li><b>ACCEPTANCE</b></li>
+            <p>The Owner, Globe Telecom Inc, hereby accepts <b>Asti Business Services Inc.</b> and assumes full
+                possession of the same.</p>
+            <div style=""><span
+                    style="border-bottom: 1px solid black; width:400px; text-align:center; margin-top: 50px;">
+            </div>
+
+            <div
+            style="display:font-weight: bold;">
+                <div style="margin: 100px 0 50px 50px; text-align:center;">
+                    <div style="border-bottom: 1px solid black; width:400px; text-align:center; margin-top: 50px;"></div>
+                </div>
+            </div>
+            </ol>
+        </div>
+    </div>';
+
+    return $output;
+}
+
+
+public function export(Request $request) 
+{
+    $data =Overtime::where('name_of_campaign',$request->campaign)->get()->first();
+    return Excel::download(new OvertimeExport($data),  'users.xlsx');
+}
+
+
+ //CRM Template 
+
+ function generateglobe(Request $request)
+ {
+     $data = Overtime::where('name_of_campaign',$request->campaign)->get();
+
+     if (!$data) {
+         return 'No data found';
+     }
+     $options = new Options();
+         $options->set('chroot', realpath(''));
+ 
+     $pdf = new Dompdf($options);
+  
+     $pdf->loadHTML($this->getglobe($data));
+     $pdf->render();
+     $pdf->stream();
+     $pdf->setPaper('A4', 'portrait');
+ }
+ 
+ public function getglobe($data)
+ {
+      
+    $count = Overtime::where('name_of_campaign', $data[0]->name_of_campaign)->count();
+    $solo = Overtime::where('name_of_campaign', $data[0]->name_of_campaign)->get()->first();
+   
+    $activity = Overtime::where('name_of_campaign',$data[0]->name_of_campaign)->get();
+    $name = Overtime::where('name_of_campaign',$data[0]->name_of_campaign)->get();
+  
+     $output = '
+     
+     <style>
+       table,
+       tr,
+       th,
+       td {
+          border: 1px solid black;
+          border-collapse: collapse;
+       }
+       .secondtable table,
+       .secondtable tr,
+       .secondtable th,
+       .secondtable td {
+         border:none;
+         height: 45px;
+       }
+    </style>
+     
+     <div>
+         <div>    
+             <img src="assets/img/clients/asticomlogo.jpg" alt="image" style="float: right;">
+         </div>
+         
+         <div>
+             <p style=" margin-top: 50px;"> This is to document the following additional services to be rendered by Asticom Technology, Inc(Service Provider) for<b> Globe Telecom  </b>(Client) with following service details:</p>
+         </div>
+     
+         <table>
+            
+             <tr>
+                  <td style=" text-align: center;"><b>NAME OF CAMPAIGN</b></td>
+                    dd($data);
+                  <td style="width: 500px; height: 35px; "> '.$solo->name_of_campaign.'';
+           
+                  $output .='
+                  </td>
+              </tr>
+ 
+               <tr>
+                 <td style=" text-align: center;" ><b>EMPLOYEE NAME</b></td>
+                 <td style="width: 500px; height: 35px; ">';
+
+ 
+                 if($count != '1'){
+                   
+                        $output .= '
+                                Refer to List of names under Activities
+                              ';
+         
+                 }
+                 else{
+            foreach ($name as $name) {
+                $output .= '
+                    
+                    ' . $name->employee_name . ' 
+                  ';
+            }
+                 }
+                 $output .='</td>
+               </tr>
+     
+               <tr>
+                 <td style=" text-align: center;" ><b>NUMBER OF HOURS</b></td>
+                 <td style="width: 500px; height: 35px; "></td>
+               </tr>
+     
+               <tr>
+                 <td style=" text-align: center;" ><b>BILLABLE AMOUNT</b></td>
+                 <td style="width: 500px; height: 35px; "> </td>
+               </tr>
+     
+               <tr>
+                 <td style=" text-align: center;"><b>BILLING ADDRESSEE </b><br><span style="color: red;"><b>(ASTICOM to fill out and send back<br> prior to CLIENT approval) </b></span></td>
+                 <td style="width: 500px; height: 35px; "> </td>
+               </tr>
+     
+               <tr style="height: 35px;">
+                 <td> </td>
+                 <td style="width: 500px; height: 35px; "> </td>
+               </tr>
+     
+               <tr style="height: 300px;">
+                 <td style=" text-align: center;" ><b>ACTIVITY/IES</b></br>';
+
+
+        if ($count != '1') {
+            foreach ($data as $data) {
+                $output .= '
+                            ' . $data->employee_name.'</br>' . ' 
+                            
+                          ';
+            }
+        }
+
+        else{
+            $output .= '
+            
+          ';
+        }
+
+                
+                 $output .='</td>
+                 <td style="width: 500px; height: 200px; "> </br>';
+
+        if ($count != '1') {
+
+            foreach ($activity as $activity) {
+                $output .= '
+                            ' . $activity->activity . '<br>' . ' 
+                          ';
+            }
+        }
+
+        else{
+            foreach ($activity as $activity) {
+                $output .= '
+                            ' . $activity->activity  . ' 
+                          ';
+            }
+        }
+                 
+
+
+                 $output .='</td>
+               </tr>
+         </table>
+               <div>
+                 <p>Both Service Provider and Client agree that the above services shall be billed through Statement of Account (SOA) to be issued for the period month ended<b> JANUARY </b> subject to the payment terms under the service engagement.</p>
+             </div>
+ 
+             <table class="secondtable" style="border:none;">
+             <tr class="secondtable">
+                 <td class="secondtable" style="width: 400px; height: 45px; " ><b>Sincerly:</b></td>
+                 <td class="secondtable"><b>Conforme:</b></td>
+               </tr>
+               
+               <tr class="secondtable">
+                 <td class="secondtable" style="height: 45px;"><b>Asticom Technology, Inc:</b></td>
+                 <td class="secondtable"><b>By: _________________</b></td>
+               </tr>
+     
+               <tr class="secondtable">
+                 <td class="secondtable">Client Service Manager _________________</td>
+                 <td class="secondtable">By: _________________</td>
+               </tr>
+     
+               <tr class="secondtable" >
+                 <td class="secondtable">Date: _________________</td>
+                 <td class="secondtable">Date: _________________</td>
+               </tr>
+              
+           </table>
+     
+         <div style="color: gray;">
+             <p>CONFIDENTIAL - PROPRIETARY <br> Unathorized disclosure internally or externally is prohibited</p>
+         </div>    
+ ';
+ 
+     foreach ($data as $row) {
+         
+     }
+ 
+     $output .= '
+         </tbody>
+         </table>';
+ 
+     return $output;
+ }
 
 }
 
