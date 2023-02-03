@@ -86,11 +86,19 @@ Route::get('/admin', function () {
     return view('admin');
 });
 
-Route::get('/coca', function () {
-    return view('coca');
-});
+
+//coca
+Route::get('/coca', [campaigncontroller::class , 'showCoca']);
 
 
+Route::post('/addCoca', [campaigncontroller::class , 'addCoca']);
+Route::post('/updateCoca', [campaigncontroller::class , 'updateCoca']);
+Route::post('/deleteCoca', [campaigncontroller::class , 'deleteCoca']);
+
+//accomplishment
+Route::get('/showAccomplishment', [campaigncontroller::class , 'showAccomplishment']);
+Route::post('/addAccomplishment', [campaigncontroller::class , 'addAccomplishment']);
+Route::post('/updateAccomplishment', [campaigncontroller::class , 'updateAccomplishment']);
 
 /* CRUD */
 

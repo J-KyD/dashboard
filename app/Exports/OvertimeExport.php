@@ -26,7 +26,7 @@ public function __construct($data){
 
 }
     public function view() : View{
-        $get = ['many'=>$this->data,'solo'=>$this->solo];
+        $get = ['many' => $this->data, 'solo' => $this->solo];
         return view('tryheader',['data' =>$get]);
     }
 }

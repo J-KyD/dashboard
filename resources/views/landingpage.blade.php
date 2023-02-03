@@ -317,7 +317,7 @@
                             <br>
 
                             <div class="col-3">
-                                <img src="{{ asset('img/naruto.jpg') }}" alt="Todd Shelton" class="img-responsive img-circle" style="border-radius: 50%;width:130px;height:130px">
+                                <img src="{{ asset('img/james.jpg') }}" alt="Todd Shelton" class="img-responsive img-circle" style="border-radius: 50%;width:130px;height:130px">
                             </div>
                             <div class="col-6">
                               <br>

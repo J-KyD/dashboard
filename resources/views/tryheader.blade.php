@@ -1,8 +1,8 @@
 <div>
-
+<table>
 
 <tr>
-  
+
 
   <td> NAME OF CAMPAIGN</td>
 
@@ -50,7 +50,7 @@
     @endforeach
   
   </td>
-  <td>@foreach ($data['many'] as $item)
+  <td><br>@foreach ($data['many'] as $item)
     
     {{ $item->activity }}
     <br> 
@@ -62,5 +62,5 @@
 
 </tr> 
 
-
+</table>
 </div>

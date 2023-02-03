@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 use App\Exports\OvertimeExport;
 use App\Models\Campaign;
 use App\Models\allProjects;
+use App\Models\Cocas;
+use App\Models\Accomplishments;
 use App\Models\Employee;
-use App\Models\Roles;
 use App\Models\User;
 use Hash, Auth;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use App\Models\Welcome;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Models\Overtime;
+use App;
 
 
 
@@ -74,11 +76,14 @@ class campaigncontroller extends Controller
     function overtime(Request $request){
         
          $project = allProjects::where('team_leader',session('name'))->get();
+     
          if($project){
             $over = Overtime::where('name_of_campaign', $request->campaign)->get()->first();
          $overtime=Overtime::where('name_of_campaign',$request->campaign)->get();
+         $campaign=Overtime::all();
      
-        $all = ['overtime' => $overtime, 'project' => $project,'over'=>$over];
+     
+        $all = ['overtime' => $overtime, 'project' => $project,'over'=>$over,'campaign' => $campaign];
         return view('overtime',['data'=>$all]);
        
     }
@@ -314,6 +319,81 @@ $client->save();
 
 return back()->with("update successfully");
 }
+}
+
+//Function for COCA
+public function addCoca(request $request)
+{
+    Cocas::create($request->date, $request->services, $request->location, $request->po_number, $request->vendor, $request->address, $request->completion_date);
+    return back()->with('status', "update successfully");
+}
+
+public function showCoca(request $request)
+{
+    $allCoca = Cocas::all();
+    return view("coca", ["data" => $allCoca]);
+
+}
+
+function updateCoca(Request $request)
+{
+    $coca = Cocas::find($request->uid);
+
+    if ($coca) {
+        $coca->date = $request->date;
+        $coca->services = $request->services;
+        $coca->location = $request->location;
+        $coca->po_number = $request->po_number;
+        $coca->vendor = $request->vendor;
+        $coca->address = $request->address;
+        $coca->completion_date = $request->completion_date;
+        $coca->save();
+        return back()->with("update successfully");
+    }
+}
+
+function deleteCoca(Request $request)
+{
+    $coca = Cocas::find($request->uid);
+    $coca->delete();
+    return back()->with("delete successfully");
+}
+
+//function for Accomplishement
+function showAccomplishment(Request $request)
+{
+    $id = $request->query('uid');
+    $accomplishment = Accomplishments::where('coca_id', $id)->get();
+    $count = Accomplishments::where('coca_id', $id)->count();
+    if($count > 0){
+        return view('accomplishment', ['data' => $accomplishment, 'request' => $request]);
+    }else{
+        return view("accomplishment", ['data' => "no task is set.", 'request' => $request]);
+    }
+}
+public function addAccomplishment(Request $request)
+{
+    Accomplishments::create($request->task, $request->accomplishment, $request->status, $request->uid);
+    $accomplishment = Accomplishments::where('coca_id', $request->uid)->get();
+    $count = Accomplishments::where('coca_id', $request->uid)->count();
+    if($count > 0){
+        return view('accomplishment', ['data' => $accomplishment, 'request' => $request]);
+    }else{
+        return view("accomplishment", ['data' => "no task is set.", 'request' => $request]);
+    }
+}
+
+function updateAccomplishment(Request $request)
+{
+    $accomplishment = Accomplishments::find($request->uid);
+
+    if ($accomplishment) {
+        $accomplishment->task = $request->task;
+        $accomplishment->accomplishment = $request->accomplishment;
+        $accomplishment->task = $request->status;            
+        $accomplishment->save();
+        return back()->with("update successfully");
+    }
 }
 
     // Add Campaign //
@@ -738,7 +818,8 @@ public function export(Request $request)
  function generateglobe(Request $request)
  {
      $data = Overtime::where('name_of_campaign',$request->campaign)->get();
-
+     $solo = Overtime::where('name_of_campaign',$request->campaign)->get();
+     $get = ['many' => $data, 'solo' => $solo];
      if (!$data) {
          return 'No data found';
      }
@@ -751,6 +832,10 @@ public function export(Request $request)
      $pdf->render();
      $pdf->stream();
      $pdf->setPaper('A4', 'portrait');
+    //  $pdf = App::make('dompdf.wrapper');
+    //  $pdf->loadView('tryheader', ['data'=>$get]);
+    //  $pdf->render();
+    //  return $pdf->stream();
  }
  
  public function getglobe($data)
@@ -783,11 +868,11 @@ public function export(Request $request)
      
      <div>
          <div>    
-             <img src="assets/img/clients/asticomlogo.jpg" alt="image" style="float: right;">
+             <img src="assets/img/clients/asticomlogo.jpg" alt="image" style="float: right;"><br><br><br>
          </div>
          
          <div>
-             <p style=" margin-top: 50px;"> This is to document the following additional services to be rendered by Asticom Technology, Inc(Service Provider) for<b> Globe Telecom  </b>(Client) with following service details:</p>
+             <p style=" margin-top: 50px;"> This is to document the following additional services to be rendered by <b> Asticom Technology, Inc </b> (Service Provider) for <b> <u>Globe</u> <u>Telecom</u> </b>(Client) with following service details:</p>
          </div>
      
          <table>
@@ -795,7 +880,7 @@ public function export(Request $request)
              <tr>
                   <td style=" text-align: center;"><b>NAME OF CAMPAIGN</b></td>
                     dd($data);
-                  <td style="width: 500px; height: 35px; "> '.$solo->name_of_campaign.'';
+                  <td style="width: 500px; height: 35px; "> &nbsp;'.$solo->name_of_campaign.'';
            
                   $output .='
                   </td>
@@ -809,7 +894,7 @@ public function export(Request $request)
                  if($count != '1'){
                    
                         $output .= '
-                                Refer to List of names under Activities
+                                &nbsp; Refer to List of names under Activities
                               ';
          
                  }
@@ -817,7 +902,7 @@ public function export(Request $request)
             foreach ($name as $name) {
                 $output .= '
                     
-                    ' . $name->employee_name . ' 
+                &nbsp; ' . $name->employee_name . ' 
                   ';
             }
                  }
@@ -871,7 +956,7 @@ public function export(Request $request)
 
             foreach ($activity as $activity) {
                 $output .= '
-                            ' . $activity->activity . '<br>' . ' 
+                &nbsp; ' . $activity->activity . '<br>' . ' 
                           ';
             }
         }
@@ -879,7 +964,7 @@ public function export(Request $request)
         else{
             foreach ($activity as $activity) {
                 $output .= '
-                            ' . $activity->activity  . ' 
+                &nbsp;' . $activity->activity  . ' 
                           ';
             }
         }

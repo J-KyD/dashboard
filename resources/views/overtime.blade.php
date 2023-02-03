@@ -101,6 +101,7 @@
                 </tr>
               </thead>
      <tbody>
+      @if(session('type')=='leader')
       @foreach ($data['overtime'] as $datas )
       
       <tr>
@@ -117,6 +118,24 @@
                   
                       </tr>
                       @endforeach
+                      @else 
+                      @foreach ($data['campaign'] as $datas )
+      
+                      <tr>
+                
+                
+                          <td class="DATA"> {{$datas->name_of_campaign}} </td>  
+                
+                          <td class="DATA">{{ $datas->employee_name}}</td>
+                          <td class="DATA">{{ $datas->number_of_hours}}</td>
+                          <td class="DATA">{{ $datas->billable_amount}}</td>
+                          <td class="DATA">{{ $datas->billing_address}}</td>
+                        
+                                   
+                                  
+                                      </tr>
+                                      @endforeach
+                      @endif
                   </tbody>
                   @if(session('status'))
                   <div class="alert alert-success">

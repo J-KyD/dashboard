@@ -42,7 +42,7 @@
                 </div>
                   
               
-                  <button class="btn btn-outline-dark" type="submit"><i class="fa fa-edit"></i> Save</button>
+                  <button class="btn btn-primary" type="submit"><i class="fa fa-edit"></i> Save</button>
        
              
               </div>
