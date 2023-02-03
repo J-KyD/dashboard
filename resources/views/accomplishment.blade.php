@@ -109,8 +109,8 @@
                                             <div class="col-md-8 " style="margin-left: 15%">
                                                 <div class="row">
                                                     <div class="col-md-6  ">
-                                                        <input style="text-align: center;" type="text" name='task'
-                                                            id="form3Example1" class="form-control" />
+                                                        <textarea style="text-align: center;" type="text" name='task'
+                                                            id="form3Example1" class="form-control" ></textarea>
                                                         <label class="form-label" for="form3Example1">Tasks</label>
                                                     </div>
                                                     <div class="col-md-6">

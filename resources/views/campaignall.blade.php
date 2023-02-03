@@ -85,7 +85,7 @@ $spaced_word = implode(" ",  str_split ($products->project_name));
 
                               <td class="DATA">{{ $employee->contact }}</td>
                               
-                              @if( session('type') == "admin" )
+                              @if( session('type') == "admin"||session('type') == "leader" )
                               <td class="DATA">{{ $employee->birthdate }}</td>
                               @endif
 

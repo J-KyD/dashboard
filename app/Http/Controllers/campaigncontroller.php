@@ -617,7 +617,7 @@ public function getHTML($data)
 
 function generateCOCAtempV3()
 {
-    $data = User::where('type','admin')->get();
+    $data = Accomplishments::where('coca_id','3')->get();
 
     if (!$data) {
         return 'No data found';
@@ -717,9 +717,9 @@ public function getPDF($data)
     foreach ($data as $row) {
         $output .= '
             <tr>
-                <td style ="border: 2px solid black;">'.$row->name.'</td>
-                <td style ="border: 2px solid black;">'.$row->employee_number.'</td>
-                <td style ="border: 2px solid black;">'.$row->type.'</td>
+                <td style="width:25%;border-top: 1pt solid black;border-right: 1pt solid black;border-bottom: 1pt solid black;border-image: initial;border-left: none;background: rgb(243, 243, 243);padding: 5pt;vertical-align: top;">'.$row->task.'</td>
+                <td style="width:25%;border-top: 1pt solid black;border-right: 1pt solid black;border-bottom: 1pt solid black;border-image: initial;border-left: none;background: rgb(243, 243, 243);padding: 5pt;vertical-align: top;">'.$row->accomplishment.'</td>
+                <td style="width:25%;border-top: 1pt solid black;border-right: 1pt solid black;border-bottom: 1pt solid black;border-image: initial;border-left: none;background: rgb(243, 243, 243);padding: 5pt;vertical-align: top;">'.$row->status.'</td>
             </tr>';
     }
 
@@ -774,10 +774,10 @@ public function getPDF($data)
     foreach ($data as $row) {
         $output .= '
             <tr>
-                <td style ="border: 2px solid black;">'.$row->name.'</td>
-                <td style ="border: 2px solid black;">'.$row->employee_number.'</td>
-                <td style ="border: 2px solid black;">'.$row->type.'</td>
-                <td style ="border: 2px solid black;">'.$row->type.'</td>
+                <td style="width:25%;border-top: 1pt solid black;border-right: 1pt solid black;border-bottom: 1pt solid black;border-image: initial;background: rgb(243, 243, 243);padding: 5pt;vertical-align: top;">'.'</td>
+                <td style="width:25%;border-top: 1pt solid black;border-right: 1pt solid black;border-bottom: 1pt solid black;border-image: initial;background: rgb(243, 243, 243);padding: 5pt;vertical-align: top;">'.'</td>
+                <td style="width:25%;border-top: 1pt solid black;border-right: 1pt solid black;border-bottom: 1pt solid black;border-image: initial;background: rgb(243, 243, 243);padding: 5pt;vertical-align: top;">'.'</td>
+                <td style="width:25%;border-top: 1pt solid black;border-right: 1pt solid black;border-bottom: 1pt solid black;border-image: initial;background: rgb(243, 243, 243);padding: 5pt;vertical-align: top;">'.'</td>
             </tr>';
     }
 

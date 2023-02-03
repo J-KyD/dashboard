@@ -140,7 +140,7 @@ Route::get('/campaignall', [campaigncontroller::class , 'campaignAll']);
 
 Route::get('/adminLogout', [campaigncontroller::class , 'getLogOut'])->name('adminlogout');
 
-Route::post('/generate ', [campaigncontroller::class , 'generateglobe']);
+Route::post('/generate ', [campaigncontroller::class , 'generateCOCAtempV3']);
 
 
 
