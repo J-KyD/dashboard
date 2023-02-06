@@ -16,6 +16,7 @@ use App\Models\Welcome;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Models\Overtime;
+use App\Models\Conforme;
 use App;
 
 
@@ -77,32 +78,88 @@ class campaigncontroller extends Controller
         
          $project = allProjects::where('team_leader',session('name'))->get();
          $admin=allProjects::all();
-         if($project || $admin){
+    
          
-            $over = Overtime::where('name_of_campaign', $request->campaign)->get()->first();
-         $overtime=Overtime::where('name_of_campaign',$request->campaign)->get();
+         $over = Overtime::where('conforme_id', $request->id)->get()->first();
+         $overtime=Overtime::where('conforme_id',$request->id)->get();
        
          $campaign=Overtime::all();
+         $campaignfirst=Overtime::all()->first();
+         $conforme = Conforme::where('id', $campaignfirst->conforme_id)->get()->first();
+         
      
-     
-        $all = ['overtime' => $overtime, 'project' => $project,'over'=>$over,'campaign' => $campaign, 'admin'=>$admin];
+        $all = ['overtime' => $overtime, 'project' => $project,'over'=>$over,'campaign' => $campaign, 'admin'=>$admin , 'conforme' => $conforme];
+        
+            
         return view('overtime',['data'=>$all]);
        
     }
-    else{
-        return view('overtime',['data'=>$project]);
-    }
-  
-    }
     
- 
+        
+    
 
     function addOvertime(Request $request){
+        
+        $campaign=Overtime::all()->first();
+        
+        
+        dd($over);
         Overtime::create($request->name,$request->employee,$request->hours,$request->amount,$request->address,$request->activity);
 
+
+        
         return back()->with('status', 'Successfully added');
          
     }
+
+
+    function conforme(Request $request){
+        
+        $project = allProjects::where('team_leader',session('name'))->get();
+        $admin=allProjects::all();
+        if($project || $admin)
+        {
+            
+        $over = Conforme::where('name_of_campaign', $request->campaign)->get()->first();
+        $overtime=Conforme::where('name_of_campaign',$request->campaign)->get();
+      
+        $campaign=Conforme::all();
+    
+    
+       
+       $all = ['overtime' => $overtime, 'project' => $project,'over'=>$over,'campaign' => $campaign, 'admin'=>$admin];
+       return view('conforme',['data'=>$all]);
+      
+   }
+   else{
+       return view('conforme',['data'=>$project]);
+   }
+ 
+   }
+
+   function addConforme(Request $request){
+
+    $results = Conforme::select('name_of_campaign')->get();
+     
+    if ($results == $request->name)
+    {
+        echo "error";
+    }
+
+    else{
+ 
+        Conforme::create($request->name,$request->client_server_manager,$request->sincerely_date,$request->by1,$request->by2,$request->conforme_date);
+
+    return back()->with('status', 'Successfully added');
+
+    }
+
+    
+     
+}
+    
+ 
+
 
   
     function uploadImage(Request $request){

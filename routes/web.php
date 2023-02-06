@@ -74,7 +74,12 @@ Route::get('/projects',[campaigncontroller::class , 'allProjects']);
 
 Route::get('/overtime',[campaigncontroller::class , 'overtime']);
 
+Route::get('/conforme',[campaigncontroller::class , 'conforme']);
+
 Route::post('/addOvertime',[campaigncontroller::class , 'addOvertime']);
+
+Route::post('/addConforme',[campaigncontroller::class , 'addConforme']);
+
 Route::post('/export',[campaigncontroller::class , 'export']);
 
 
@@ -160,4 +165,6 @@ Route::get('/userprofile', function () {
 });
 
 //change
+
+//conforme
 
