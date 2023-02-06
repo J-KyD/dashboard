@@ -826,20 +826,20 @@ public function export(Request $request)
      if (!$data) {
          return 'No data found';
      }
-     $options = new Options();
-         $options->set('chroot', realpath(''));
+    //  $options = new Options();
+    //      $options->set('chroot', realpath(''));
  
-     $pdf = new Dompdf($options);
+    //  $pdf = new Dompdf($options);
   
-     $pdf->loadHTML($this->getglobe($data));
-     $pdf->render();
-     $pdf->stream();
-    $pdf->setPaper('A4', 'portrait');
-    //  $pdf = App::make('dompdf.wrapper');
-    //  $pdf->loadView('pdftry', ['data'=>$data]);
+    //  $pdf->loadHTML($this->getglobe($data));
     //  $pdf->render();
-    //  $pdf->setPaper('A4', 'portrait');
-    //  return $pdf->stream();
+    //  $pdf->stream();
+    // $pdf->setPaper('A4', 'portrait');
+     $pdf = App::make('dompdf.wrapper');
+     $pdf->loadView('pdftry', ['data'=>$data]);
+     $pdf->render();
+     $pdf->setPaper('A4', 'portrait');
+     return $pdf->stream(time());
  }
  
  public function getglobe($data)

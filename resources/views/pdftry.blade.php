@@ -22,8 +22,20 @@
       color: #333;
       padding: 10px;
       height: 70px;
+      
 
     }
+    /* header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-image: URL('img/client-11.jpg') ;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 30px;
+} */
  
         #content {
   margin-top: 100px;
@@ -35,7 +47,7 @@ body {
   </style>
 </head>
 <header>
-    <img src="img/client-11.jpg" alt="Globe Logo" style="height:auto; width:5.68cm; margin-bottom:10px;">
+    <img src="img/client-11.png" alt="Globe Logo" style="height:auto; width:5.68cm; margin-bottom:10px;">
     <br>
     <span style="font-size:8pt; margin-bottom: 50px;">The Globe Tower, 32nd St. cor. 7th Ave., Bonifacio Global City, Taguig City, Philippines</span>    
 </header>
