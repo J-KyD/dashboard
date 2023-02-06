@@ -76,14 +76,16 @@ class campaigncontroller extends Controller
     function overtime(Request $request){
         
          $project = allProjects::where('team_leader',session('name'))->get();
-     
-         if($project){
+         $admin=allProjects::all();
+         if($project || $admin){
+         
             $over = Overtime::where('name_of_campaign', $request->campaign)->get()->first();
          $overtime=Overtime::where('name_of_campaign',$request->campaign)->get();
+       
          $campaign=Overtime::all();
      
      
-        $all = ['overtime' => $overtime, 'project' => $project,'over'=>$over,'campaign' => $campaign];
+        $all = ['overtime' => $overtime, 'project' => $project,'over'=>$over,'campaign' => $campaign, 'admin'=>$admin];
         return view('overtime',['data'=>$all]);
        
     }
@@ -819,6 +821,7 @@ public function export(Request $request)
  {
      $data = Overtime::where('name_of_campaign',$request->campaign)->get();
      $solo = Overtime::where('name_of_campaign',$request->campaign)->get();
+ 
      $get = ['many' => $data, 'solo' => $solo];
      if (!$data) {
          return 'No data found';
@@ -831,10 +834,11 @@ public function export(Request $request)
      $pdf->loadHTML($this->getglobe($data));
      $pdf->render();
      $pdf->stream();
-     $pdf->setPaper('A4', 'portrait');
+    $pdf->setPaper('A4', 'portrait');
     //  $pdf = App::make('dompdf.wrapper');
-    //  $pdf->loadView('tryheader', ['data'=>$get]);
+    //  $pdf->loadView('pdftry', ['data'=>$data]);
     //  $pdf->render();
+    //  $pdf->setPaper('A4', 'portrait');
     //  return $pdf->stream();
  }
  
@@ -846,6 +850,8 @@ public function export(Request $request)
    
     $activity = Overtime::where('name_of_campaign',$data[0]->name_of_campaign)->get();
     $name = Overtime::where('name_of_campaign',$data[0]->name_of_campaign)->get();
+    $month = strftime("%B", strtotime(date('Y-m')));
+  
   
      $output = '
      
@@ -975,7 +981,7 @@ public function export(Request $request)
                </tr>
          </table>
                <div>
-                 <p>Both Service Provider and Client agree that the above services shall be billed through Statement of Account (SOA) to be issued for the period month ended<b> JANUARY </b> subject to the payment terms under the service engagement.</p>
+                 <p>Both Service Provider and Client agree that the above services shall be billed through Statement of Account (SOA) to be issued for the period month ended<b> '.$month.' </b> subject to the payment terms under the service engagement.</p>
              </div>
  
              <table class="secondtable" style="border:none;">

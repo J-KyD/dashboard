@@ -30,10 +30,12 @@
               <div class="activity-card">
         
                 <div class="row">
+             
             <form method="get" action ="overtime">
               @csrf
               <div class="row">
                 <div class="col-11">
+                  @if(session('type') == "leader")
               <select name="campaign" class="form-control" style="text-align: center; margin-top: 20px;margin-left:20px;">
                 <option value="0">Select campaign Name</option>
                 @foreach ( $data['project'] as $campaign )
@@ -41,6 +43,17 @@
                 <option value="{{ $campaign->project_name }}">{{ $campaign->project_name }}</option>
                 @endforeach
               </select>
+
+              @elseif(session('type') == "admin")
+              <select name="campaign" class="form-control" style="text-align: center; margin-top: 20px;margin-left:20px;">
+                <option value="0">Select campaign Name</option>
+         
+                @foreach ( $data['admin'] as $campaign )
+             
+                <option value="{{ $campaign->project_name }}">{{ $campaign->project_name }}</option>
+                @endforeach
+              </select>
+              @endif
                 </div>
 
 
@@ -101,7 +114,7 @@
                 </tr>
               </thead>
      <tbody>
-      @if(session('type')=='leader')
+      @if(session('type')=='leader' || session('type') == "admin")
       @foreach ($data['overtime'] as $datas )
       
       <tr>
@@ -118,23 +131,7 @@
                   
                       </tr>
                       @endforeach
-                      @else 
-                      @foreach ($data['campaign'] as $datas )
-      
-                      <tr>
-                
-                
-                          <td class="DATA"> {{$datas->name_of_campaign}} </td>  
-                
-                          <td class="DATA">{{ $datas->employee_name}}</td>
-                          <td class="DATA">{{ $datas->number_of_hours}}</td>
-                          <td class="DATA">{{ $datas->billable_amount}}</td>
-                          <td class="DATA">{{ $datas->billing_address}}</td>
-                        
-                                   
-                                  
-                                      </tr>
-                                      @endforeach
+                     
                       @endif
                   </tbody>
                   @if(session('status'))
@@ -181,7 +178,8 @@
                     
                     <div class="row">
               
-                      <div class="col-md-6  ">    
+                      <div class="col-md-6  ">  
+                       @if(session('type') == "leader")
                         <select style="text-align:center" class="form-control"name="name" id="">
                           <option value="0">Select Type </option>
                           @foreach ($data['project'] as $item)
@@ -190,6 +188,16 @@
                           @endforeach
                      
                         </select>
+                        @elseif(session('type')== "admin")
+                        <select style="text-align:center" class="form-control"name="name" id="">
+                          <option value="0">Select Type </option>
+                          @foreach ($data['admin'] as $item)
+                          <option value="{{ $item->project_name }}">{{ $item->project_name }}</option>
+                         
+                          @endforeach
+                     
+                        </select>
+                        @endif
                       </div>
                                 <div class="col-md-6">            
                             <input style="text-align: center;" type="text" name='employee'id="form3Example2" class="form-control" />
