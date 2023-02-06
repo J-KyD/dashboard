@@ -109,6 +109,7 @@
                   <th style="text-align: center">NUMBER OF HOURS</th>
                   <th style="text-align: center">BILLABLE AMOUNT</th>
                   <th style="text-align: center">BILLING ADDRESSEE</th>
+                  <th style="text-align: center">ACTION</th>
        
           
                 </tr>
@@ -127,7 +128,18 @@
           <td class="DATA">{{ $datas->billable_amount}}</td>
           <td class="DATA">{{ $datas->billing_address}}</td>
         
-                   
+          <td>
+            <a href="#editOvertime{{ $datas->id }}" class="btn btn-success" data-bs-toggle="modal" style="width:90px;"><i class="fa fa-edit">
+         </i> Edit</a>
+         <form method="post" action ="deleteAccount">
+           @csrf
+              <input style="text-align: center;" type="text" name="iddelover" value="{{ $datas->id }}" hidden>
+               <button class="btn btn-danger" type="submit" style="margin-top: 10px;white-space: nowrap;font-size: 1rem;background-color:#dc3545;color:white;width:90px; text-align:center;padding: 0.375rem 0.75rem"><i class="fa fa-trash">
+               </i>delete</button>
+         </form>
+         @include('adminmodal')
+           
+         </td>
                   
                       </tr>
                       @endforeach
